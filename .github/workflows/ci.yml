@@ -1,0 +1,68 @@
+name: CI - Air Quality checker
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Step 3: Install ESLint dependencies (optional if already in package.json)
+      - name: Install dependencies for Backend
+        working-directory: ./backend
+        run: npm install
+
+      - name: Install dependencies for Frontend
+        working-directory: ./frontend
+        run: npm install
+
+      # Step 4: Run ESLint checks
+      - name: Run ESLint (backend)
+        working-directory: ./backend
+        run: |
+          npx eslint . --ext .js,.jsx,.ts,.tsx || echo "ESLint found issues in backend"
+
+      - name: Run ESLint (frontend)
+        working-directory: ./frontend
+        run: |
+          npx eslint . --ext .js,.jsx,.ts,.tsx || echo "ESLint found issues in frontend"
+
+      # Step 5: Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Step 6: Build Docker images
+      - name: Build Backend image
+        run: docker build -t mern-backend ./backend
+
+      - name: Build Frontend image
+        run: docker build -t mern-frontend ./frontend
+
+      # # Step 7: Start services
+      # - name: Start services with Docker Compose
+      #   run: |
+      #     docker compose -f docker-compose.yml up -d
+      #     sleep 10  # wait for services to start
+
+
+      # # Step 8: Check running containers
+      # - name: Check running containers
+      #   run: docker ps -a
+
+      # # Step 9: Stop and clean up
+      # - name: Stop Docker Compose
+      #   run: docker-compose down

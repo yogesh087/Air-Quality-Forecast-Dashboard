@@ -1,0 +1,14 @@
+FROM node:22
+
+WORKDIR /app
+
+COPY package*.json ./
+
+# Install bcrypt correctly for Linux
+RUN npm install
+
+COPY . .
+
+EXPOSE 5000
+
+CMD ["npm", "start"]
