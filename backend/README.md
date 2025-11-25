@@ -32,14 +32,14 @@ cp .env
  
 4. Update .env file:
 
-  PORT=5000
+PORT=5000
 MONGODB_URI=mongodb://localhost:27017/airquality
 AQI_API_KEY=your_api_key_here
 NODE_ENV=development
 CACHE_TTL=1800000
 MAX_CACHE_ENTRIES=1000
 
-Getting WAQI API Key
+##Getting WAQI API Key
 
  1.Visit https://aqicn.org/api/
 
@@ -50,11 +50,12 @@ Getting WAQI API Key
 4.Add it to the .env file
 
 
- Running the Application
+ 
+##Running the Application
 Development
 npm run dev
 
- API Endpoints
+ ##API Endpoints
 
 1. Health Check
 GET /api/health
@@ -67,7 +68,7 @@ GET /api/cache/stats
 DELETE /api/cache/clear
 
 
- Response Format
+## Response Format
 
  {
   "city": "London",
