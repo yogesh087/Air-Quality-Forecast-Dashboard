@@ -27,7 +27,7 @@ jobs:
         run: npm install
 
       - name: Install dependencies for Frontend
-        working-directory: ./brontend
+        working-directory: ./frontend
         run: npm install
 
       # Step 4: Run ESLint checks
